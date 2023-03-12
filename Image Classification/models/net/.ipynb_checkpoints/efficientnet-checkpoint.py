@@ -40,7 +40,7 @@ class EffNetV2(nn.Module):
         # building inverted residual blocks
         
         for t, c, n, s, f in self.cfgs:
-            output_channel = _make_divisible(c * width_mult, 8)
+            output_channel = cv._make_divisible(c * width_mult, 8)
             for i in range(n):
                 if f:
                     layers.append(cv.MBConv(input_channel, output_channel, s if i == 0 else 1, t, True))
@@ -54,7 +54,7 @@ class EffNetV2(nn.Module):
         
         # building last several layers
         
-        output_channel = _make_divisible(1792 * width_mult, 8) if width_mult > 1.0 else 1792
+        output_channel = cv._make_divisible(1792 * width_mult, 8) if width_mult > 1.0 else 1792
         
         self.conv = cv.ConvNormAct(
             inp=input_channel,
